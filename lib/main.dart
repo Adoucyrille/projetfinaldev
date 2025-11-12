@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'pages/accueil.dart';
 import 'pages/connexion.dart';
 import 'pages/inscription.dart';
-
-
+import 'pages/accueil.dart';
+import 'pages/ajout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,59 +11,24 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ADOU Bloc Notes',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-      
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+      // 🔹 Première page au lancement
+      initialRoute: '/connexion',
+      routes: {
+        '/connexion': (context) => const Connexion(),
+        '/inscription': (context) => const Inscription(),
+        '/accueil': (context) => const Accueil(),
+        '/ajout': (context) => const AjoutTache(),
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
- 
-  @override
-  Widget build(BuildContext context) {
-   
-    return Scaffold(
-      appBar: AppBar(
-       
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        
-      ),
-      body: Center(
-        
-        child: Column(
-         
-         
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
+      },
     );
   }
 }
