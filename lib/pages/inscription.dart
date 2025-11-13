@@ -44,44 +44,50 @@ class _InscriptionPageState extends State<Inscription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          /// 🌄 Image de fond couvrant tout l’écran
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/BLOCNOTE.jpeg"), // <-- ton image ici
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+    appBar: AppBar(
+    backgroundColor: Colors.orange,
+    title: const Text('ADOU Bloc Notes', style: TextStyle(color: Colors.white, fontSize: 22),),
 
-          /// Contenu principal avec un effet semi-transparent
-          Container(
-            color: Colors.black.withOpacity(0.5),
-            child: Center(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
-                child: Card(
-                  elevation: 8,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+    ),
+    backgroundColor: Colors.white, // Fond blanc de l’écran
+    body: Center(
+    child: SingleChildScrollView(
+    padding: const EdgeInsets.all(24),
+    child: Column(
+    mainAxisSize: MainAxisSize.min,
+      children: [
+              // 🔹 Container du formulaire avec image de fond
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: const DecorationImage(
+                    image: AssetImage("assets/images/BLOCNOTE.jpeg"),
+                    fit: BoxFit.cover,
                   ),
-                  color: Colors.transparent.withOpacity(0.9),
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.person_add_alt_1,
-                            size: 80, color: Colors.orange),
-                        const SizedBox(height: 10),
-                        const Text(
-                          "Inscription",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.lock_outline,
+                        size: 80, color: Colors.orange),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Inscription",
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
 
                         // Champ username
                         TextField(
@@ -131,12 +137,10 @@ class _InscriptionPageState extends State<Inscription> {
                       ],
                     ),
                   ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+                  ],
+    ),
+    ),
+    ),
     );
   }
 }
