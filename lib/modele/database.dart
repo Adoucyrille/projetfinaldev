@@ -23,12 +23,9 @@ class DatabaseJohn {
 
   /// Méthode d’initialisation de la base de données
   Future<Database> _initDB(String filePath) async {
-    // Récupère le chemin du dossier où stocker la base
     final dbPath = await getDatabasesPath();
-    // Concatène le chemin du dossier avec le nom du fichier
     final path = join(dbPath, filePath);
 
-    // Ouvre la base ou la crée si elle n’existe pas
     return await openDatabase(
       path,
       version: 1,
@@ -47,7 +44,7 @@ class DatabaseJohn {
       )
     ''');
 
-    // Table des tâches 
+    // Table des tâches
     await db.execute('''
       CREATE TABLE taches(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,7 +67,7 @@ class DatabaseJohn {
     });
   }
 
-  /// Connexion d’un utilisateur (vérifie username + password)
+  /// Connexion d’un utilisateur
   Future<Map<String, dynamic>?> loginUser(String username, String password) async {
     final db = await database;
     final res = await db.query(
@@ -79,14 +76,15 @@ class DatabaseJohn {
       whereArgs: [username, password],
     );
 
-    // Si un utilisateur correspond, on retourne sa ligne
     if (res.isNotEmpty) return res.first;
     return null;
   }
 
-  //      GESTION DES TÂCHES (
+  // ==============================
+  //      GESTION DES TÂCHES
+  // ==============================
 
-  /// Ajoute une nouvelle tâche dans la base
+  /// Ajoute une nouvelle tâche
   Future<int> addTodo(String titre, String contenu) async {
     final db = await database;
     return await db.insert('taches', {
@@ -98,12 +96,26 @@ class DatabaseJohn {
   /// Récupère toutes les tâches
   Future<List<Map<String, dynamic>>> getTodos() async {
     final db = await database;
-    return await db.query('taches');
+    return await db.query('taches', orderBy: "id DESC");
   }
 
-  /// Supprime une tâche selon son identifiant
+  /// Supprime une tâche
   Future<int> deleteTodo(int id) async {
     final db = await database;
     return await db.delete('taches', where: 'id = ?', whereArgs: [id]);
+  }
+
+  /// 🔥 MODIFICATION D’UNE TÂCHE
+  Future<int> updateTodo(int id, String titre, String contenu) async {
+    final db = await database;
+    return await db.update(
+      'taches',
+      {
+        'titre': titre,
+        'contenu': contenu,
+      },
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }

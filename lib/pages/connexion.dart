@@ -148,7 +148,7 @@ class _ConnexionPageState extends State<Connexion> {
 
               const SizedBox(height: 20),
 
-              // 🔹 Texte en dessous du container
+              //  Texte en dessous du container
               const Text(
                 "Vous n'avez pas de compte ?",
                 style: TextStyle(

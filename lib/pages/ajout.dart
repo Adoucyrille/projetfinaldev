@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projetmobilfinal/pages/accueil.dart';
 import '../modele/database.dart';
 
 class AjoutTache extends StatefulWidget {
@@ -35,12 +36,35 @@ class _AjoutTacheState extends State<AjoutTache> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Ajouter une Tâche")),
+      appBar: AppBar(
+      backgroundColor: Colors.orange,
+      title: const Text('ADOU Bloc Notes', style: TextStyle(color: Colors.white, fontSize: 22),), 
+      actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: "Déconnexion",
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/connexion');
+            },
+          )
+        ],
+      ), 
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          
           children: [
+
+            const SizedBox(height: 20),
+                    const Text(
+                      "Ajout de nouvelles notes",
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange,
+                      ),
+                    ),
             TextField(
               controller: _titreController,
               decoration: const InputDecoration(
@@ -52,7 +76,7 @@ class _AjoutTacheState extends State<AjoutTache> {
             TextField(
               controller: _contenuController,
               decoration: const InputDecoration(
-                labelText: "Contenu / Détails",
+                labelText: "Contenu ",
                 border: OutlineInputBorder(),
               ),
               maxLines: 3,
@@ -61,12 +85,29 @@ class _AjoutTacheState extends State<AjoutTache> {
             ElevatedButton.icon(
               onPressed: _ajouterTache,
               icon: const Icon(Icons.save),
-              label: const Text("Enregistrer"),
+              label: const Text("Enregistrer", style: TextStyle(color: Colors.white),),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
+                 backgroundColor:
+                                  Colors.orange.withOpacity(0.8),
               ),
             ),
+            TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const Accueil()),
+                    );
+                   
+                  },
+                  child: const Text(
+                    "Voir ma liste!",
+                    style: TextStyle(
+                        color: Colors.orange, fontWeight: FontWeight.bold),
+                  ),
+                ),
           ],
+          
         ),
       ),
     );
