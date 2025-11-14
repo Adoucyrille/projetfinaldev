@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // 🔹 Première page au lancement
-      initialRoute: '/accueil',
+      initialRoute: '/connexion',
       routes: {
         '/connexion': (context) => const Connexion(),
         '/inscription': (context) => const Inscription(),
