@@ -93,6 +93,7 @@ class _InscriptionPageState extends State<Inscription> {
 
                     TextField(
                       controller: _usernameController,
+                      style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         labelText: "Nom d'utilisateur",
                         prefixIcon: Icon(Icons.person),
@@ -104,6 +105,7 @@ class _InscriptionPageState extends State<Inscription> {
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
+                      style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         labelText: "Mot de passe",
                         prefixIcon: Icon(Icons.lock),
@@ -115,6 +117,7 @@ class _InscriptionPageState extends State<Inscription> {
                     TextField(
                       controller: _confirmPasswordController,
                       obscureText: true,
+                      style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         labelText: "Confirmer le mot de passe",
                         prefixIcon: Icon(Icons.lock_outline),
