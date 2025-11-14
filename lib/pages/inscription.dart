@@ -14,6 +14,9 @@ class _InscriptionPageState extends State<Inscription> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
+  bool _isPasswordHidden = true;
+  bool _isConfirmPasswordHidden = true;
+
   Future<void> _register() async {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
@@ -78,8 +81,7 @@ class _InscriptionPageState extends State<Inscription> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.lock_outline,
-                        size: 80, color: Colors.orange),
+                    const Icon(Icons.lock_outline, size: 80, color: Colors.orange),
                     const SizedBox(height: 20),
                     const Text(
                       "Inscription",
@@ -91,9 +93,10 @@ class _InscriptionPageState extends State<Inscription> {
                     ),
                     const SizedBox(height: 30),
 
+                    /// Champ nom d'utilisateur
                     TextField(
                       controller: _usernameController,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                       decoration: const InputDecoration(
                         labelText: "Nom d'utilisateur",
                         prefixIcon: Icon(Icons.person),
@@ -102,26 +105,48 @@ class _InscriptionPageState extends State<Inscription> {
                     ),
                     const SizedBox(height: 15),
 
+                    /// Champ mot de passe
                     TextField(
                       controller: _passwordController,
-                      obscureText: true,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
+                      obscureText: _isPasswordHidden,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
                         labelText: "Mot de passe",
-                        prefixIcon: Icon(Icons.lock),
-                        border: OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.lock),
+                        border: const OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordHidden ? Icons.visibility_off : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordHidden = !_isPasswordHidden;
+                            });
+                          },
+                        ),
                       ),
                     ),
                     const SizedBox(height: 15),
 
+                    /// Champ confirmation mot de passe
                     TextField(
                       controller: _confirmPasswordController,
-                      obscureText: true,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
+                      obscureText: _isConfirmPasswordHidden,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
                         labelText: "Confirmer le mot de passe",
-                        prefixIcon: Icon(Icons.lock_outline),
-                        border: OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        border: const OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isConfirmPasswordHidden ? Icons.visibility_off : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isConfirmPasswordHidden = !_isConfirmPasswordHidden;
+                            });
+                          },
+                        ),
                       ),
                     ),
                     const SizedBox(height: 25),

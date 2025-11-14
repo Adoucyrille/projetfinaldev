@@ -15,6 +15,7 @@ class _ConnexionPageState extends State<Connexion> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false;
+  bool _isPasswordHidden = true; // 👁️ Gestion affichage mot de passe
 
   Future<void> _login() async {
     final username = _usernameController.text.trim();
@@ -45,7 +46,8 @@ class _ConnexionPageState extends State<Connexion> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text("Nom d'utilisateur ou mot de passe incorrect.")),
+          content: Text("Nom d'utilisateur ou mot de passe incorrect."),
+        ),
       );
     }
   }
@@ -55,17 +57,18 @@ class _ConnexionPageState extends State<Connexion> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
-        title: const Text('ADOU Bloc Notes', style: TextStyle(color: Colors.white, fontSize: 22),),
-        
+        title: const Text(
+          'ADOU Bloc Notes',
+          style: TextStyle(color: Colors.white, fontSize: 22),
+        ),
       ),
-      backgroundColor: Colors.white, // Fond blanc de l’écran
+      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // 🔹 Container du formulaire avec image de fond
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -88,6 +91,7 @@ class _ConnexionPageState extends State<Connexion> {
                     const Icon(Icons.lock_outline,
                         size: 80, color: Colors.orange),
                     const SizedBox(height: 20),
+
                     const Text(
                       "Connexion",
                       style: TextStyle(
@@ -97,6 +101,8 @@ class _ConnexionPageState extends State<Connexion> {
                       ),
                     ),
                     const SizedBox(height: 30),
+
+                    // 🔹 Champ nom d'utilisateur
                     TextField(
                       controller: _usernameController,
                       style: const TextStyle(color: Colors.white),
@@ -104,41 +110,63 @@ class _ConnexionPageState extends State<Connexion> {
                         labelText: "Nom d'utilisateur",
                         labelStyle: const TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none),
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
                         filled: true,
                         fillColor: Colors.black.withOpacity(0.3),
-                        prefixIcon:
-                            const Icon(Icons.person, color: Colors.white),
+                        prefixIcon: const Icon(Icons.person, color: Colors.white),
                       ),
                     ),
                     const SizedBox(height: 15),
+
+                    // 🔹 Champ mot de passe avec icône œil
                     TextField(
                       controller: _passwordController,
-                      obscureText: true,
+                      obscureText: _isPasswordHidden,
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: "Mot de passe",
                         labelStyle: const TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none),
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
                         filled: true,
                         fillColor: Colors.black.withOpacity(0.3),
                         prefixIcon: const Icon(Icons.lock, color: Colors.white),
+
+                        // 👁️ Icône afficher/masquer
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordHidden
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordHidden = !_isPasswordHidden;
+                            });
+                          },
+                        ),
                       ),
                     ),
                     const SizedBox(height: 25),
+
+                    // 🔹 Bouton connexion
                     _isLoading
                         ? const CircularProgressIndicator()
                         : ElevatedButton.icon(
                             onPressed: _login,
                             icon: const Icon(Icons.login),
-                            label: const Text("Se connecter", style: TextStyle(color: Colors.white),),
+                            label: const Text(
+                              "Se connecter",
+                              style: TextStyle(color: Colors.white),
+                            ),
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(double.infinity, 50),
-                              backgroundColor:
-                                  Colors.orange.withOpacity(0.8),
+                              backgroundColor: Colors.orange.withOpacity(0.8),
                             ),
                           ),
                     const SizedBox(height: 15),
@@ -148,7 +176,6 @@ class _ConnexionPageState extends State<Connexion> {
 
               const SizedBox(height: 20),
 
-              //  Texte en dessous du container
               const Text(
                 "Vous n'avez pas de compte ?",
                 style: TextStyle(
@@ -158,19 +185,22 @@ class _ConnexionPageState extends State<Connexion> {
                 ),
               ),
               const SizedBox(height: 8),
+
               TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const Inscription()),
-                    );
-                  },
-                  child: const Text(
-                    "Inscrivez-vous!",
-                    style: TextStyle(
-                        color: Colors.orange, fontWeight: FontWeight.bold),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const Inscription()),
+                  );
+                },
+                child: const Text(
+                  "Inscrivez-vous!",
+                  style: TextStyle(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
+              ),
             ],
           ),
         ),
