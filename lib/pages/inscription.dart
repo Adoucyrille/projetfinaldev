@@ -45,19 +45,20 @@ class _InscriptionPageState extends State<Inscription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
-    backgroundColor: Colors.orange,
-    title: const Text('ADOU Bloc Notes', style: TextStyle(color: Colors.white, fontSize: 22),),
-
-    ),
-    backgroundColor: Colors.white, // Fond blanc de l’écran
-    body: Center(
-    child: SingleChildScrollView(
-    padding: const EdgeInsets.all(24),
-    child: Column(
-    mainAxisSize: MainAxisSize.min,
-      children: [
-              // 🔹 Container du formulaire avec image de fond
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        title: const Text(
+          'ADOU Bloc Notes',
+          style: TextStyle(color: Colors.white, fontSize: 22),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -74,7 +75,7 @@ class _InscriptionPageState extends State<Inscription> {
                     ),
                   ],
                 ),
-                 child: Column(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(Icons.lock_outline,
@@ -90,57 +91,56 @@ class _InscriptionPageState extends State<Inscription> {
                     ),
                     const SizedBox(height: 30),
 
-                        // Champ username
-                        TextField(
-                          controller: _usernameController,
-                          decoration: const InputDecoration(
-                            labelText: "Nom d'utilisateur",
-                            prefixIcon: Icon(Icons.person),
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-
-                        // Champ mot de passe
-                        TextField(
-                          controller: _passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            labelText: "Mot de passe",
-                            prefixIcon: Icon(Icons.lock),
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-
-                        // Champ de confirmation
-                        TextField(
-                          controller: _confirmPasswordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            labelText: "Confirmer le mot de passe",
-                            prefixIcon: Icon(Icons.lock_outline),
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        const SizedBox(height: 25),
-
-                        // Bouton d’inscription
-                        ElevatedButton.icon(
-                          onPressed: _register,
-                          icon: const Icon(Icons.check),
-                          label: const Text("S'inscrire", style: TextStyle( color: Colors.white) ),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50),
-                            backgroundColor: Colors.orange,
-                          ),
-                        ),
-                      ],
+                    TextField(
+                      controller: _usernameController,
+                      decoration: const InputDecoration(
+                        labelText: "Nom d'utilisateur",
+                        prefixIcon: Icon(Icons.person),
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                   const SizedBox(height: 20),
+                    const SizedBox(height: 15),
 
-              //  Texte en dessous du container
+                    TextField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: "Mot de passe",
+                        prefixIcon: Icon(Icons.lock),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+
+                    TextField(
+                      controller: _confirmPasswordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: "Confirmer le mot de passe",
+                        prefixIcon: Icon(Icons.lock_outline),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+
+                    ElevatedButton.icon(
+                      onPressed: _register,
+                      icon: const Icon(Icons.check),
+                      label: const Text(
+                        "S'inscrire",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                        backgroundColor: Colors.orange,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
               const Text(
                 "Vous avez un compte ?",
                 style: TextStyle(
@@ -150,23 +150,26 @@ class _InscriptionPageState extends State<Inscription> {
                 ),
               ),
               const SizedBox(height: 8),
+
               TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const Connexion()),
-                    );
-                  },
-                  child: const Text(
-                    "Connectez-vous!",
-                    style: TextStyle(
-                        color: Colors.orange, fontWeight: FontWeight.bold),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const Connexion()),
+                  );
+                },
+                child: const Text(
+                  "Connectez-vous!",
+                  style: TextStyle(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                  ],
-    ),
-    ),
-    ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
