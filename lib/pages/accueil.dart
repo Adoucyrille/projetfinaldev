@@ -11,6 +11,7 @@ class Accueil extends StatefulWidget {
 
 class _AccueilPageState extends State<Accueil> {
   List<Map<String, dynamic>> _taches = [];
+  int _indexMenu = 0; // Footer navigation index
 
   @override
   void initState() {
@@ -32,7 +33,7 @@ class _AccueilPageState extends State<Accueil> {
     await _chargerTaches();
   }
 
-  // 🔥 CONFIRMATION DE SUPPRESSION
+  // Confirmation de suppression
   Future<void> _confirmerSuppression(int id) async {
     showDialog(
       context: context,
@@ -50,8 +51,8 @@ class _AccueilPageState extends State<Accueil> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               onPressed: () async {
-                Navigator.pop(context); // fermer le popup
-                await _supprimerTache(id); // supprimer
+                Navigator.pop(context);
+                await _supprimerTache(id);
               },
               child: const Text("Supprimer"),
             ),
@@ -61,7 +62,7 @@ class _AccueilPageState extends State<Accueil> {
     );
   }
 
-  // 🔥 Modal Bottom Sheet pour modifier une tâche
+  // Modal de modification
   void _ouvrirModalModification(Map<String, dynamic> tache) {
     TextEditingController titreController =
         TextEditingController(text: tache['titre']);
@@ -89,7 +90,6 @@ class _AccueilPageState extends State<Accueil> {
                 "Modifier la tâche",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-
               const SizedBox(height: 20),
 
               TextField(
@@ -112,7 +112,6 @@ class _AccueilPageState extends State<Accueil> {
               ),
 
               const SizedBox(height: 20),
-
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -122,14 +121,12 @@ class _AccueilPageState extends State<Accueil> {
                       titreController.text,
                       contenuController.text,
                     );
-
                     Navigator.pop(context);
                     _chargerTaches();
                   },
                   child: const Text("Enregistrer"),
                 ),
               ),
-
               const SizedBox(height: 20),
             ],
           ),
@@ -138,12 +135,38 @@ class _AccueilPageState extends State<Accueil> {
     );
   }
 
+  // Navigation footer
+  void _changerPage(int index) async {
+    setState(() {
+      _indexMenu = index;
+    });
+
+    if (index == 1) {
+      // Aller à la page d'ajout
+      final result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const AjoutTache()),
+      );
+
+      if (result == true) {
+        _chargerTaches();
+      }
+
+      setState(() {
+        _indexMenu = 0; // retour auto accueil
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         backgroundColor: Colors.orange,
-         title: const Text('ADOU Bloc Notes', style: TextStyle(color: Colors.white, fontSize: 22),), 
+        backgroundColor: Colors.orange,
+        title: const Text(
+          'ADOU Bloc Notes',
+          style: TextStyle(color: Colors.white, fontSize: 22),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -155,7 +178,6 @@ class _AccueilPageState extends State<Accueil> {
         ],
       ),
 
-      // LISTE DES TÂCHES
       body: _taches.isEmpty
           ? const Center(
               child: Text(
@@ -177,15 +199,15 @@ class _AccueilPageState extends State<Accueil> {
                     title: Text(
                       tache['titre'] ?? "Sans titre",
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     subtitle: Text(
                       tache['contenu'] ?? "",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-
-                    // 🔥 Icônes modification + suppression
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -204,17 +226,22 @@ class _AccueilPageState extends State<Accueil> {
               },
             ),
 
-      // BOUTON AJOUTER
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const AjoutTache()),
-          );
-
-          if (result == true) _chargerTaches();
-        },
-        child: const Icon(Icons.add),
+      // ===== FOOTER =====
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _indexMenu,
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.grey,
+        onTap: _changerPage,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Accueil",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.note_add),
+            label: "Notes",
+          ),
+        ],
       ),
     );
   }
